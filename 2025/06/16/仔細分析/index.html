@@ -1,0 +1,911 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-TW"  
+    
+      data-theme-mode="auto"
+    
+  >
+  <head>
+  
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本部落格所有文章除特別聲明外，均採用 BY-NC-SA 授權協議。轉載請註明出處！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'https://itamiokanjiro.ddns.net:3111';</script>
+  
+  <title>
+    仔細分析 |
+    
+    學習日誌
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_0khxww3tj3q9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="錯誤訊息 &#123;&quot;level&quot;:&quot;error&quot;,&quot;timestamp&quot;:&quot;2025-06-16T18:10:43.426849691+08:00&quot;,&quot;message&quot;:&quot;build failed&quot;,&quot;service&quot;:&quot;orchestratio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="仔細分析">
+<meta property="og:url" content="https://itamiokanjiro.ddns.net:3111/2025/06/16/%E4%BB%94%E7%B4%B0%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="學習日誌">
+<meta property="og:description" content="錯誤訊息 &#123;&quot;level&quot;:&quot;error&quot;,&quot;timestamp&quot;:&quot;2025-06-16T18:10:43.426849691+08:00&quot;,&quot;message&quot;:&quot;build failed&quot;,&quot;service&quot;:&quot;orchestratio">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-06-16T08:31:41.000Z">
+<meta property="article:modified_time" content="2025-06-17T17:15:56.508Z">
+<meta property="article:author" content="一袋米要扛幾樓">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="學習日誌" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL&#x2F;toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx&#x2F;1oA&#x2F;0l8ysE" crossorigin="anonymous">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css" integrity="sha384-4NN3fZ5AokFyHuoihl7A9qWaCt+HsAtOaUsXwJGRb4&#x2F;SMBtFr2vcNSHR5E8dg0Wk" crossorigin="anonymous">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      
+      
+        
+      
+      <div class="loading-word">少女祈禱中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/">首頁</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/archives">歸檔</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/about">關於</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/friend">友鏈</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 訂閱" target="_blank"></a>
+    
+    
+    
+  </nav>
+  
+</div>
+<header id="header">
+  
+    
+      
+        <picture>
+          
+        </picture>
+        
+          <img  fetchpriority="high" src="/images/600211.webp" alt="仔細分析">
+        
+      
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">仔細分析</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/600211.webp" data-sizes="auto" alt="一袋米要扛幾樓" class="lazyload">
+  <div class="sidebar-author-name">一袋米要扛幾樓</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">53</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+        
+      
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+  
+</aside>
+
+          <section id="main"><article id="post-仔細分析" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-06-16T08:31:41.000Z" itemprop="datePublished">2025-06-16</time>
+    <time style="display: none;" id="post-update-time">2025-06-18</time>
+  </span>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <p>錯誤訊息</p>
+<pre><code>&#123;&quot;level&quot;:&quot;error&quot;,&quot;timestamp&quot;:&quot;2025-06-16T18:10:43.426849691+08:00&quot;,&quot;message&quot;:&quot;build failed&quot;,&quot;service&quot;:&quot;orchestration-api&quot;,&quot;internal&quot;:true,&quot;pid&quot;:1056502,&quot;template.id&quot;:&quot;yf0qzjw458rcn5nv80g5&quot;,&quot;debug_id&quot;:null,&quot;error&quot;:&quot;failed to create template &#39;yf0qzjw458rcn5nv80g5&#39;: [Unimplemented] unknown service TemplateService&quot;,&quot;stacktrace&quot;:&quot;github.com/e2b-dev/infra/packages/shared/pkg/telemetry.ReportCriticalError\n\t/kok/todo-api/main4/packages/shared/pkg/telemetry/tracing.go:80\ngithub.com/e2b-dev/infra/packages/api/internal/handlers.(*APIStore).PostTemplatesTemplateIDBuildsBuildID\n\t/kok/todo-api/main4/packages/api/internal/handlers/template_start_build.go:160\ngithub.com/e2b-dev/infra/packages/api/internal/api.(*ServerInterfaceWrapper).PostTemplatesTemplateIDBuildsBuildID\n\t/kok/todo-api/main4/packages/api/internal/api/api.gen.go:848\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185\ngithub.com/gin-contrib/zap.GinzapWithConfig.func1\n\t/root/go/pkg/mod/github.com/gin-contrib/zap@v1.1.4/zap.go:68\nmain.NewGinServer.func1\n\t/kok/todo-api/main4/packages/api/main.go:157\ngithub.com/e2b-dev/infra/packages/api/internal/middleware.ExcludeRoutes.func1\n\t/kok/todo-api/main4/packages/api/internal/middleware/exclude.go:14\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185\ngithub.com/oapi-codegen/gin-middleware.OapiRequestValidatorWithOptions.func1\n\t/root/go/pkg/mod/github.com/oapi-codegen/gin-middleware@v1.0.1/oapi_validate.go:108\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185\ngithub.com/gin-contrib/size.RequestSizeLimiter.func1\n\t/root/go/pkg/mod/github.com/gin-contrib/size@v0.0.0-20230212012657-e14a14094dc4/size.go:88\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185\ngithub.com/gin-gonic/gin.CustomRecoveryWithWriter.func1\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185\ngithub.com/e2b-dev/infra/packages/api/internal/middleware.IncludeRoutes.func1\n\t/kok/todo-api/main4/packages/api/internal/middleware/exclude.go:28\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185\ngithub.com/e2b-dev/infra/packages/api/internal/middleware/otel/tracing.Middleware.func1\n\t/kok/todo-api/main4/packages/api/internal/middleware/otel/tracing/middleware.go:87\ngithub.com/e2b-dev/infra/packages/api/internal/middleware.ExcludeRoutes.func1\n\t/kok/todo-api/main4/packages/api/internal/middleware/exclude.go:14\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\t/root/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589\nnet/http.serverHandler.ServeHTTP\n\t/usr/local/go/src/net/http/server.go:3301\nnet/http.(*conn).serve\n\t/usr/local/go/src/net/http/server.go:2102&quot;&#125;
+</code></pre>
+<p>錯在 &#x2F;kok&#x2F;todo-api&#x2F;main4&#x2F;packages&#x2F;api&#x2F;internal&#x2F;api&#x2F;api.gen.go:848</p>
+<p>ORCHESTRATOR_SERVICES ?&#x3D; template-manager只有3個選項<br>UnknownService  ServiceType &#x3D; “orch-unknown”<br>Orchestrator    ServiceType &#x3D; “orchestrator”<br>TemplateManager ServiceType &#x3D; “template-manager”</p>
+<pre><code>    package service
+
+    import (
+        &quot;strings&quot;
+
+        &quot;github.com/e2b-dev/infra/packages/shared/pkg/env&quot;
+        &quot;github.com/e2b-dev/infra/packages/shared/pkg/utils&quot;
+    )
+
+    type ServiceType string
+
+    const (
+        UnknownService  ServiceType = &quot;orch-unknown&quot;
+        Orchestrator    ServiceType = &quot;orchestrator&quot;
+        TemplateManager ServiceType = &quot;template-manager&quot;
+    )
+
+    // ParseServiceType converts a string to a ServiceType.
+    // It is case-insensitive and defaults to UnknownService.
+    func ParseServiceType(s string) ServiceType &#123;
+        switch strings.ToLower(strings.TrimSpace(s)) &#123;
+        case string(Orchestrator):
+            return Orchestrator
+        case string(TemplateManager):
+            return TemplateManager
+        default:
+            return UnknownService
+        &#125;
+    &#125;
+
+    // GetServices parses the ORCHESTRATOR_SERVICES environment variable
+    // and returns a slice of known ServiceTypes.
+    func GetServices() []ServiceType &#123;
+        servicesEnv := env.GetEnv(&quot;ORCHESTRATOR_SERVICES&quot;, string(Orchestrator))
+        rawServiceNames := strings.Split(servicesEnv, &quot;,&quot;)
+
+        var services []ServiceType
+        for _, name := range rawServiceNames &#123;
+            service := ParseServiceType(name)
+            if service != UnknownService &#123;
+                services = append(services, service)
+            &#125;
+        &#125;
+
+        return services
+    &#125;
+
+    // GetServiceName returns a single string identifier for the given services.
+    // If multiple services are present, they are joined with underscores.
+    func GetServiceName(services []ServiceType) string &#123;
+        if len(services) == 0 &#123;
+            return string(UnknownService)
+        &#125;
+
+        var builder strings.Builder
+        for i, s := range services &#123;
+            if i &gt; 0 &#123;
+                builder.WriteString(&quot;_&quot;)
+            &#125;
+            builder.WriteString(string(s))
+        &#125;
+
+        return builder.String()
+    &#125;
+
+    func GetClientID() string &#123;
+        return utils.RequiredEnv(&quot;NODE_ID&quot;, &quot;Nomad ID of the instance node&quot;)
+    &#125;
+</code></pre>
+<p>這邊說明了RegistryProvider 有3個參數GCP_ARTIFACTS AWS_ECR Local</p>
+<pre><code>package artifacts_registry
+
+import (
+    &quot;context&quot;
+    &quot;errors&quot;
+    &quot;fmt&quot;
+    &quot;time&quot;
+
+    v1 &quot;github.com/google/go-containerregistry/pkg/v1&quot;
+
+    &quot;github.com/e2b-dev/infra/packages/shared/pkg/env&quot;
+)
+
+type RegistryProvider string
+
+const (
+    GCPStorageProvider   RegistryProvider = &quot;GCP_ARTIFACTS&quot;
+    AWSStorageProvider   RegistryProvider = &quot;AWS_ECR&quot;
+    LocalStorageProvider RegistryProvider = &quot;Local&quot;
+
+    DefaultRegistryProvider RegistryProvider = GCPStorageProvider
+
+    storageProviderEnv = &quot;ARTIFACTS_REGISTRY_PROVIDER&quot;
+)
+
+var (
+    ErrImageNotExists = errors.New(&quot;image does not exist&quot;)
+)
+
+type ArtifactsRegistry interface &#123;
+    GetTag(ctx context.Context, templateId string, buildId string) (string, error)
+    GetImage(ctx context.Context, templateId string, buildId string, platform v1.Platform) (v1.Image, error)
+    Delete(ctx context.Context, templateId string, buildId string) error
+&#125;
+
+func GetArtifactsRegistryProvider() (ArtifactsRegistry, error) &#123;
+    var provider = RegistryProvider(env.GetEnv(storageProviderEnv, string(DefaultRegistryProvider)))
+
+    setupCtx, setupCtxCancel := context.WithTimeout(context.Background(), 10*time.Second)
+    defer setupCtxCancel()
+
+    switch provider &#123;
+    case AWSStorageProvider:
+        return NewAWSArtifactsRegistry(setupCtx)
+    case GCPStorageProvider:
+        return NewGCPArtifactsRegistry(setupCtx)
+    case LocalStorageProvider:
+        return NewLocalArtifactsRegistry()
+    &#125;
+
+    return nil, fmt.Errorf(&quot;unknown artifacts registry provider: %s&quot;, provider)
+&#125;
+</code></pre>
+<p>sudo mkdir -p &#x2F;fc-envd<br>sudo ln -s &#x2F;kok&#x2F;todo-api&#x2F;main4&#x2F;packages&#x2F;envd&#x2F;bin&#x2F;envd &#x2F;fc-envd&#x2F;envd</p>
+<pre><code>&#123;&quot;level&quot;:&quot;error&quot;,&quot;timestamp&quot;:&quot;2025-06-17T16:25:22.134849023+08:00&quot;,&quot;message&quot;:&quot;failed to create ext4 filesystem&quot;,&quot;service&quot;:&quot;template-manager&quot;,&quot;internal&quot;:true,&quot;pid&quot;:2344056,&quot;debug_id&quot;:null,&quot;error&quot;:&quot;error requesting docker image: error pulling image: Error response from daemon: No such image: 5p0dyt49ab73y1301cfp:f7f675ba-df1b-47df-be33-517d6320da87&quot;,&quot;stacktrace&quot;:&quot;github.com/e2b-dev/infra/packages/shared/pkg/telemetry.ReportCriticalError\n\t/kok/todo-api/main4/packages/shared/pkg/telemetry/tracing.go:80\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/build.(*Rootfs).createExt4Filesystem.func1\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/build/rootfs.go:75\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/build.(*Rootfs).createExt4Filesystem\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/build/rootfs.go:83\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/build.Build\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/build/build.go:39\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/build.(*TemplateBuilder).Build\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/build/template_builder.go:140\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/server.(*ServerStore).TemplateCreate.func1\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/server/create_template.go:81&quot;&#125;
+
+
+&#123;&quot;level&quot;:&quot;info&quot;,&quot;timestamp&quot;:&quot;2025-06-17T16:25:22.135452225+08:00&quot;,&quot;message&quot;:&quot;[2025-06-17T16:25:22+08:00] ...\n&quot;,&quot;service&quot;:&quot;template-manager&quot;,&quot;internal&quot;:false,&quot;pid&quot;:2344056,&quot;logger&quot;:&quot;template-manager&quot;,&quot;envID&quot;:&quot;5p0dyt49ab73y1301cfp&quot;,&quot;buildID&quot;:&quot;f7f675ba-df1b-47df-be33-517d6320da87&quot;&#125;
+
+
+&#123;&quot;level&quot;:&quot;info&quot;,&quot;timestamp&quot;:&quot;2025-06-17T16:25:22.135653926+08:00&quot;,&quot;message&quot;:&quot;[2025-06-17T16:25:22+08:00] Postprocessing failed: error building environment: error creating rootfs for template &#39;5p0dyt49ab73y1301cfp&#39; during build &#39;f7f675ba-df1b-47df-be33-517d6320da87&#39;: error requesting docker image: error pulling image: Error response from daemon: No such image: 5p0dyt49ab73y1301cfp:f7f675ba-df1b-47df-be33-517d6320da87\n&quot;,&quot;service&quot;:&quot;template-manager&quot;,&quot;internal&quot;:false,&quot;pid&quot;:2344056,&quot;logger&quot;:&quot;template-manager&quot;,&quot;envID&quot;:&quot;5p0dyt49ab73y1301cfp&quot;,&quot;buildID&quot;:&quot;f7f675ba-df1b-47df-be33-517d6320da87&quot;&#125;
+
+
+&#123;&quot;level&quot;:&quot;error&quot;,&quot;timestamp&quot;:&quot;2025-06-17T16:25:30.136909428+08:00&quot;,&quot;message&quot;:&quot;error while building template&quot;,&quot;service&quot;:&quot;template-manager&quot;,&quot;internal&quot;:true,&quot;pid&quot;:2344056,&quot;debug_id&quot;:null,&quot;error&quot;:&quot;error building environment: error creating rootfs for template &#39;5p0dyt49ab73y1301cfp&#39; during build &#39;f7f675ba-df1b-47df-be33-517d6320da87&#39;: error requesting docker image: error pulling image: Error response from daemon: No such image: 5p0dyt49ab73y1301cfp:f7f675ba-df1b-47df-be33-517d6320da87&quot;,&quot;stacktrace&quot;:&quot;github.com/e2b-dev/infra/packages/shared/pkg/telemetry.ReportCriticalError\n\t/kok/todo-api/main4/packages/shared/pkg/telemetry/tracing.go:80\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/server.(*ServerStore).reportBuildFailed\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/server/create_template.go:105\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/server.(*ServerStore).TemplateCreate.func1\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/server/create_template.go:87&quot;&#125;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>步驟</th>
+<th>狀態</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1️⃣ 建立 TemplateCreate 請求</td>
+<td>✅ 已完成</td>
+</tr>
+<tr>
+<td>2️⃣ 建立 build 環境 (RootFS)</td>
+<td>🟡 進行中</td>
+</tr>
+<tr>
+<td>3️⃣ 嘗試拉 docker image</td>
+<td>❌ 失敗（找不到該 tag）</td>
+</tr>
+<tr>
+<td>4️⃣ 真正進入 build</td>
+<td>❌ 未發生（因為 image 拉不到）</td>
+</tr>
+</tbody></table>
+<p>錯誤訊息  kok&#x2F;todo-api&#x2F;main4&#x2F;packages&#x2F;shared&#x2F;pkg&#x2F;telemetry&#x2F;tracing.go:80</p>
+<pre><code>&#123;&quot;level&quot;:&quot;error&quot;,&quot;timestamp&quot;:&quot;2025-06-17T21:27:04.477078842+08:00&quot;,&quot;message&quot;:&quot;error while building template&quot;,&quot;service&quot;:&quot;template-manager&quot;,&quot;internal&quot;:true,&quot;pid&quot;:2418839,&quot;debug_id&quot;:null,&quot;error&quot;:&quot;error provisioning sandbox: error creating sandbox: failed to create FC: error starting fc: error starting fc: [PUT /actions][400] createSyncActionBadRequest  &amp;&#123;FaultMessage:Start microvm error: Cannot load kernel due to invalid memory configuration or invalid kernel image: Kernel Loader: failed to load ELF kernel image: Kernel Loader: Unable to read kernel image&#125;&quot;,&quot;stacktrace&quot;:&quot;github.com/e2b-dev/infra/packages/shared/pkg/telemetry.ReportCriticalError\n\t/kok/todo-api/main4/packages/shared/pkg/telemetry/tracing.go:80\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/server.(*ServerStore).reportBuildFailed\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/server/create_template.go:105\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/server.(*ServerStore).TemplateCreate.func1\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/server/create_template.go:87&quot;&#125;
+-&gt; Environment built failed
+
+
+
+&#123;&quot;level&quot;:&quot;error&quot;,&quot;timestamp&quot;:&quot;2025-06-17T23:12:55.767940419+08:00&quot;,&quot;message&quot;:&quot;error while building template&quot;,&quot;service&quot;:&quot;template-manager&quot;,&quot;internal&quot;:true,&quot;pid&quot;:11549,&quot;debug_id&quot;:null,&quot;error&quot;:&quot;error provisioning sandbox: error creating sandbox: failed to create FC: error starting fc: error starting fc: [PUT /actions][400] createSyncActionBadRequest  &amp;&#123;FaultMessage:Start microvm error: Cannot load kernel due to invalid memory configuration or invalid kernel image: Kernel Loader: failed to load ELF kernel image: Kernel Loader: Unable to read kernel image&#125;&quot;,&quot;stacktrace&quot;:&quot;github.com/e2b-dev/infra/packages/shared/pkg/telemetry.ReportCriticalError\n\t/kok/todo-api/main4/packages/shared/pkg/telemetry/tracing.go:80\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/server.(*ServerStore).reportBuildFailed\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/server/create_template.go:105\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/server.(*ServerStore).TemplateCreate.func1\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/server/create_template.go:87&quot;&#125;
+
+
+&#123;&quot;level&quot;:&quot;error&quot;,&quot;timestamp&quot;:&quot;2025-06-18T00:52:33.652277231+08:00&quot;,&quot;message&quot;:&quot;error while building template&quot;,&quot;service&quot;:&quot;template-manager&quot;,&quot;internal&quot;:true,&quot;pid&quot;:36366,&quot;debug_id&quot;:null,&quot;error&quot;:&quot;error provisioning sandbox: error creating sandbox: failed to create FC: error starting fc: error starting fc: [PUT /actions][400] createSyncActionBadRequest  &amp;&#123;FaultMessage:Start microvm error: Cannot load kernel due to invalid memory configuration or invalid kernel image: Kernel Loader: failed to load ELF kernel image: Kernel Loader: Unable to read kernel image&#125;&quot;,&quot;stacktrace&quot;:&quot;github.com/e2b-dev/infra/packages/shared/pkg/telemetry.ReportCriticalError\n\t/kok/todo-api/main4/packages/shared/pkg/telemetry/tracing.go:80\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/server.(*ServerStore).reportBuildFailed\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/server/create_template.go:107\ngithub.com/e2b-dev/infra/packages/orchestrator/internal/template/server.(*ServerStore).TemplateCreate.func1\n\t/kok/todo-api/main4/packages/orchestrator/internal/template/server/create_template.go:89&quot;&#125;
+</code></pre>
+<p>grep -r ‘func NewBuilder’ &#x2F;kok&#x2F;todo-api&#x2F;main4&#x2F;packages&#x2F;orchestrator&#x2F;internal&#x2F;template<br>b.logger.Error(“底層 Build 失敗”, zap.Error(err))</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+      
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="/images/600211.webp" data-sizes="auto" alt="tcpdump" class="lazyload">
+          
+        
+        <a href="/2025/06/16/tcpdump/"></a>
+        <div class="article-nav-caption">Newer</div>
+        <h3 class="article-nav-title">
+          
+            tcpdump
+          
+        </h3>
+      </div>
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="/images/600211.webp" data-sizes="auto" alt="grpcurl" class="lazyload">
+        
+      
+      <a href="/2025/06/15/grpcurl/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          grpcurl
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+
+
+
+
+</section>
+        </div>
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      
+      
+      
+        2020-2025
+      
+      <span class="footer-info-sep rotate"></span>
+      一袋米要扛幾樓
+    </div>
+    
+      <div>
+        基於&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        20.2k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        02:00
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">總訪問量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">總訪客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/600211.webp" data-sizes="auto" alt="一袋米要扛幾樓" class="lazyload">
+  <div class="sidebar-author-name">一袋米要扛幾樓</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">53</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+    
+  </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  
+</nav>
+
+    </div>
+    
+    
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js" integrity="sha384-8LyaidD9GPxQQgLJO&#x2F;WRw&#x2F;O2h3BoNq&#x2F;ApI&#x2F;ecpvM6RsrCz2qP2ppBXUKihP4V&#x2F;2d" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "一袋米要扛幾樓",
+          title: "仔細分析",
+          url: "https://itamiokanjiro.ddns.net:3111/2025/06/16/%E4%BB%94%E7%B4%B0%E5%88%86%E6%9E%90/",
+          excerpt: "",
+          description: "",
+          stripContent: "錯誤訊息 &amp;#123;&amp;quot;level&amp;quot;:&amp;quot;error&amp;quot;,&amp;quot;timestamp&amp;quot;:&amp;quot;2025-06-16T18:10:43.426849691+08:00&amp;quot;,&amp;quot;message&amp;quot;:&amp;quot;build failed&amp;quot;,&amp;quot;service&amp;quot;:&amp;quot;orchestration-api&amp;quot;,&amp;quot;internal&amp;quot;:true,&amp;quot;pid&amp;qu",
+          date: "Mon Jun 16 2025 16:31:41 GMT+0800",
+          updated: "Wed Jun 18 2025 01:15:56 GMT+0800",
+          cover: "/images/600211.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+        
+
+
+
+
+
+
+
+
+      
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.8.4' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+  </html>
+

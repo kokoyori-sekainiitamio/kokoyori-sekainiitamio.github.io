@@ -1,0 +1,1114 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-TW"  
+    
+      data-theme-mode="auto"
+    
+  >
+  <head>
+  
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本部落格所有文章除特別聲明外，均採用 BY-NC-SA 授權協議。轉載請註明出處！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'https://itamiokanjiro.ddns.net:3111';</script>
+  
+  <title>
+    針對infra項目分析 |
+    
+    學習日誌
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_0khxww3tj3q9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="本嘗試  是高度失敗的 最終失敗作品 infra&#x2F;├── .github&#x2F;│   └── workflows&#x2F;├── .vscode&#x2F;├── packages&#x2F;│   ├── api (可以獨立編譯並啟動在docker中 )&#x2F;│   ├── buckets&#x2F;│   ├── client-proxy&#x2F;│   ├── cl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="針對infra項目分析">
+<meta property="og:url" content="https://itamiokanjiro.ddns.net:3111/2025/06/19/%E9%87%9D%E5%B0%8Dinfra%E9%A0%85%E7%9B%AE%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="學習日誌">
+<meta property="og:description" content="本嘗試  是高度失敗的 最終失敗作品 infra&#x2F;├── .github&#x2F;│   └── workflows&#x2F;├── .vscode&#x2F;├── packages&#x2F;│   ├── api (可以獨立編譯並啟動在docker中 )&#x2F;│   ├── buckets&#x2F;│   ├── client-proxy&#x2F;│   ├── cl">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-06-19T13:20:45.000Z">
+<meta property="article:modified_time" content="2025-06-21T23:01:34.880Z">
+<meta property="article:author" content="一袋米要扛幾樓">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="學習日誌" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL&#x2F;toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx&#x2F;1oA&#x2F;0l8ysE" crossorigin="anonymous">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css" integrity="sha384-4NN3fZ5AokFyHuoihl7A9qWaCt+HsAtOaUsXwJGRb4&#x2F;SMBtFr2vcNSHR5E8dg0Wk" crossorigin="anonymous">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      
+      
+        
+      
+      <div class="loading-word">少女祈禱中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/">首頁</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/archives">歸檔</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/about">關於</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/friend">友鏈</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 訂閱" target="_blank"></a>
+    
+    
+    
+  </nav>
+  
+</div>
+<header id="header">
+  
+    
+      
+        <picture>
+          
+        </picture>
+        
+          <img  fetchpriority="high" src="/images/600211.webp" alt="針對infra項目分析">
+        
+      
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">針對infra項目分析</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/600211.webp" data-sizes="auto" alt="一袋米要扛幾樓" class="lazyload">
+  <div class="sidebar-author-name">一袋米要扛幾樓</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">53</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+        
+      
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+  
+</aside>
+
+          <section id="main"><article id="post-針對infra項目分析" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-06-19T13:20:45.000Z" itemprop="datePublished">2025-06-19</time>
+    <time style="display: none;" id="post-update-time">2025-06-22</time>
+  </span>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <p>本嘗試  是高度失敗的 最終失敗作品</p>
+<p>infra&#x2F;<br>├── .github&#x2F;<br>│   └── workflows&#x2F;<br>├── .vscode&#x2F;<br>├── packages&#x2F;<br>│   ├── api (可以獨立編譯並啟動在docker中 )&#x2F;<br>│   ├── buckets&#x2F;<br>│   ├── client-proxy&#x2F;<br>│   ├── cluster&#x2F;<br>│   ├── cluster-disk-image&#x2F;<br>│   ├── db (獨立啟動 可灌入數據庫 某種版本無效)&#x2F;<br>│   ├── docker-reverse-proxy&#x2F;<br>│   ├── envd (可以獨立編譯並啟動在docker中 可編譯 可獨立啟動)&#x2F;<br>│   ├── fc-kernels (編譯VM vmlinux-6.1.102)&#x2F;<br>│   ├── fc-versions (編譯firecracker v1.10.1_1fcdaec08)&#x2F;<br>│   ├── init(未知)&#x2F;<br>│   ├── nomad (目前分析是前端 語言不懂 大概是控制流程)&#x2F;<br>│   ├── orchestrator (可以獨立啟動在docker中 初始化templement)&#x2F;<br>│   └── shared(共用檔)&#x2F;<br>├── readme-assets(圖片資料夾)&#x2F;<br>├── scripts&#x2F;<br>├── spec&#x2F;<br>├── terraform&#x2F;<br>│   ├── github&#x2F;<br>│   ├── grafana&#x2F;<br>│   └── redis&#x2F;<br>├── tests (測試區塊)&#x2F;<br>├── .dockerignore<br>├── .env.template<br>├── .gitignore<br>├── .golangci.yml<br>├── DEV.md<br>├── LICENSE<br>├── Makefile (主要啟動代碼)<br>├── README.md<br>├── VERSION<br>├── go.work<br>├── self-host.md<br>├── main.tf<br>├── variables.tf<br>└── .terraform.lock.hcl</p>
+<p>主項目Makefile 新增以下</p>
+<pre><code>#先導入數據庫才能啟動
+RUN1:
+    $(MAKE) -C packages/db migrate/up
+#先啟動 orchestrator伺服器才能啟動api調用 
+#需要提前啟動sudo modprobe nbd max_part=32 max_nbds=32
+#需要提前安裝apt install golang -y
+#需要提前安裝apt install make -y
+#啟動有概率網路發生問題sudo ip route del default sudo ip route add default via 192.168.1.1 dev ens33
+#make RUN2 &gt; 2.txt 2&gt;&amp;1
+
+RUN2:
+    $(MAKE) -C packages/orchestrator run-debug
+#啟動前端用的api調用
+#需要提前到/kok/todo-api/main4/packages/shared/pkg/grpc/connection.go
+#GetConnection()函數中新增
+#if strings.TrimSpace(host) == &quot;&quot; &#123;
+#	// 當 host 空字串時，強制設定為 192.168.1.104:5008 (你的伺服器)
+#	host = &quot;192.168.1.104:5008&quot;
+#	fmt.Println(&quot;Host for gRPC not set, using default connection:&quot;, host)
+#&#125;
+#make RUN3 &gt; 3.txt 2&gt;&amp;1
+RUN3:
+    $(MAKE) -C packages/api run
+#打開envd用途不明
+RUN4:
+    $(MAKE) -C packages/envd start-docker
+#打開tests用途不明
+RUN5:
+    $(MAKE) -C tests test
+
+#用途不明
+RUN6:
+    terraform init
+    terraform plan
+#編譯vmlinux-6.1.102起來
+RUN7:
+    $(MAKE) -C packages/fc-versions build
+#編譯firecracker起來
+RUN8:
+    $(MAKE) -C packages/fc-kernels build
+</code></pre>
+<p>packages&#x2F;orchestrator 資料夾的make需要進行微調 為</p>
+<pre><code>ENV := $(shell cat ../../.last_used_env || echo &quot;not-set&quot;)
+-include ../../.env.$&#123;ENV&#125;
+IMAGE := e2b-orchestration/api
+
+
+openapi := ../../spec/openapi.yml
+codegen := go tool github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen
+expectedMigration := $(shell ./../../scripts/get-latest-migration.sh)
+
+.PHONY: generate
+generate:
+    $(codegen) -old-config-style -generate gin --package api $(openapi) &gt; internal/api/api.gen.go
+    $(codegen) -old-config-style -generate types --package api $(openapi) &gt; internal/api/types.gen.go
+    $(codegen) -old-config-style -generate spec --package api $(openapi) &gt; internal/api/spec.gen.go
+
+
+.PHONY: build
+build:
+    # Allow for passing commit sha directly for docker builds
+    $(eval COMMIT_SHA ?= $(shell git rev-parse --short HEAD))
+    $(eval EXPECTED_MIGRATION_TIMESTAMP ?= $(expectedMigration))
+    CGO_ENABLED=0 go build -o bin/api -ldflags &quot;-X=main.commitSHA=$(COMMIT_SHA) -X=main.expectedMigrationTimestamp=$(EXPECTED_MIGRATION_TIMESTAMP)&quot; .
+
+.PHONY: build-debug
+build-debug:
+    $(eval COMMIT_SHA ?= $(shell git rev-parse --short HEAD))
+    $(eval EXPECTED_MIGRATION_TIMESTAMP ?= $(expectedMigration))
+    CGO_ENABLED=1 go build -race -gcflags=all=&quot;-N -l&quot; -o bin/api -ldflags &quot;-X=main.commitSHA=$(COMMIT_SHA) -X=main.expectedMigrationTimestamp=$(EXPECTED_MIGRATION_TIMESTAMP)&quot; .
+
+.PHONY: run
+run:
+    make build-debug
+    POSTGRES_CONNECTION_STRING=$(POSTGRES_CONNECTION_STRING) \
+    SUPABASE_JWT_SECRETS=$(SUPABASE_JWT_SECRETS) \
+    GOTRACEBACK=crash \
+    GODEBUG=madvdontneed=1 \
+    TEMPLATE_BUCKET_NAME=$(TEMPLATE_BUCKET_NAME) \
+    SANDBOX_ACCESS_TOKEN_HASH_SEED=$(SANDBOX_ACCESS_TOKEN_HASH_SEED) \
+    ENVIRONMENT=$(ENVIRONMENT) \
+    ORCHESTRATOR_PORT=5008 \
+    ./bin/api --port 3009 
+
+# Run the API using air
+.PHONY: dev
+dev:
+    go tool air
+
+# You run the parametrized command like this:
+# make metric=heap interval=90 profiler
+.PHONY: profiler
+profiler:
+    go tool pprof -http :9991 http://localhost:3000/debug/pprof/$(metric)?seconds=$(interval)\&amp;timeout=120
+
+.PHONY: build-and-upload
+build-and-upload:
+    $(eval COMMIT_SHA := $(shell git rev-parse --short HEAD))
+    $(eval EXPECTED_MIGRATION_TIMESTAMP := $(expectedMigration))
+    @rm -rf .shared/ .db/
+    @cp -r ../shared .shared/
+    @cp -r ../db .db/
+    @docker buildx install # sets up the buildx as default docker builder (otherwise the command below won&#39;t work)
+    @docker build --platform linux/amd64 --tag &quot;$(GCP_REGION)-docker.pkg.dev/$(GCP_PROJECT_ID)/$(IMAGE)&quot; --push --build-arg COMMIT_SHA=&quot;$(COMMIT_SHA)&quot; --build-arg EXPECTED_MIGRATION_TIMESTAMP=&quot;$(EXPECTED_MIGRATION_TIMESTAMP)&quot; .
+    @rm -rf .shared/
+    @rm -rf .db/
+
+.PHONY: test
+test:
+    go test -v ./...
+</code></pre>
+<p>packages&#x2F;api 資料夾的make需要進行微調 為</p>
+<pre><code>ENV := $(shell cat ../../.last_used_env || echo &quot;not-set&quot;)
+-include ../../.env.$&#123;ENV&#125;
+IMAGE := e2b-orchestration/api
+
+
+openapi := ../../spec/openapi.yml
+codegen := go tool github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen
+expectedMigration := $(shell ./../../scripts/get-latest-migration.sh)
+
+.PHONY: generate
+generate:
+    $(codegen) -old-config-style -generate gin --package api $(openapi) &gt; internal/api/api.gen.go
+    $(codegen) -old-config-style -generate types --package api $(openapi) &gt; internal/api/types.gen.go
+    $(codegen) -old-config-style -generate spec --package api $(openapi) &gt; internal/api/spec.gen.go
+
+
+.PHONY: build
+build:
+    # Allow for passing commit sha directly for docker builds
+    $(eval COMMIT_SHA ?= $(shell git rev-parse --short HEAD))
+    $(eval EXPECTED_MIGRATION_TIMESTAMP ?= $(expectedMigration))
+    CGO_ENABLED=0 go build -o bin/api -ldflags &quot;-X=main.commitSHA=$(COMMIT_SHA) -X=main.expectedMigrationTimestamp=$(EXPECTED_MIGRATION_TIMESTAMP)&quot; .
+
+.PHONY: build-debug
+build-debug:
+    $(eval COMMIT_SHA ?= $(shell git rev-parse --short HEAD))
+    $(eval EXPECTED_MIGRATION_TIMESTAMP ?= $(expectedMigration))
+    CGO_ENABLED=1 go build -race -gcflags=all=&quot;-N -l&quot; -o bin/api -ldflags &quot;-X=main.commitSHA=$(COMMIT_SHA) -X=main.expectedMigrationTimestamp=$(EXPECTED_MIGRATION_TIMESTAMP)&quot; .
+
+.PHONY: run
+run:
+    make build-debug
+    POSTGRES_CONNECTION_STRING=$(POSTGRES_CONNECTION_STRING) \
+    SUPABASE_JWT_SECRETS=$(SUPABASE_JWT_SECRETS) \
+    GOTRACEBACK=crash \
+    GODEBUG=madvdontneed=1 \
+    TEMPLATE_BUCKET_NAME=$(TEMPLATE_BUCKET_NAME) \
+    SANDBOX_ACCESS_TOKEN_HASH_SEED=$(SANDBOX_ACCESS_TOKEN_HASH_SEED) \
+    ENVIRONMENT=$(ENVIRONMENT) \
+    ORCHESTRATOR_PORT=5008 \
+    ./bin/api --port 3009 
+
+# Run the API using air
+.PHONY: dev
+dev:
+    go tool air
+
+# You run the parametrized command like this:
+# make metric=heap interval=90 profiler
+.PHONY: profiler
+profiler:
+    go tool pprof -http :9991 http://localhost:3000/debug/pprof/$(metric)?seconds=$(interval)\&amp;timeout=120
+
+.PHONY: build-and-upload
+build-and-upload:
+    $(eval COMMIT_SHA := $(shell git rev-parse --short HEAD))
+    $(eval EXPECTED_MIGRATION_TIMESTAMP := $(expectedMigration))
+    @rm -rf .shared/ .db/
+    @cp -r ../shared .shared/
+    @cp -r ../db .db/
+    @docker buildx install # sets up the buildx as default docker builder (otherwise the command below won&#39;t work)
+    @docker build --platform linux/amd64 --tag &quot;$(GCP_REGION)-docker.pkg.dev/$(GCP_PROJECT_ID)/$(IMAGE)&quot; --push --build-arg COMMIT_SHA=&quot;$(COMMIT_SHA)&quot; --build-arg EXPECTED_MIGRATION_TIMESTAMP=&quot;$(EXPECTED_MIGRATION_TIMESTAMP)&quot; .
+    @rm -rf .shared/
+    @rm -rf .db/
+
+.PHONY: test
+test:
+    go test -v ./...
+</code></pre>
+<p>調用API使用 go run 1.go 計算出JWT<br>sub是數據庫auth中users表中的 id 欄位</p>
+<pre><code>package main
+
+import (
+    &quot;encoding/json&quot;
+    &quot;fmt&quot;
+    &quot;time&quot;
+
+    &quot;github.com/golang-jwt/jwt/v5&quot;
+)
+
+// 定義密鑰結構
+type JWTSecret struct &#123;
+    Type string `json:&quot;type&quot;`
+    Key  string `json:&quot;key&quot;`
+&#125;
+
+// 從 JSON 解析出一把密鑰
+func parseSingleSecret(jsonStr string) (JWTSecret, error) &#123;
+    var secret JWTSecret
+    err := json.Unmarshal([]byte(jsonStr), &amp;secret)
+    return secret, err
+&#125;
+
+func main() &#123;
+    // 可改成從 os.Getenv(&quot;SUPABASE_JWT_SECRETS&quot;) 讀取
+    supabaseJWTSecret := `&#123;&quot;type&quot;:&quot;HS256&quot;, &quot;key&quot;:&quot;abcdefghijklmnop&quot;&#125;`
+
+    // 解析密鑰
+    secret, err := parseSingleSecret(supabaseJWTSecret)
+    if err != nil &#123;
+        panic(&quot;解析失敗: &quot; + err.Error())
+    &#125;
+
+    // 用密鑰簽名 JWT
+    signingKey := []byte(secret.Key)
+    claims := jwt.MapClaims&#123;
+        &quot;sub&quot;: &quot;c91b0b27-017b-4308-84c0-073a93e1552b&quot;,
+        &quot;exp&quot;: time.Now().Add(time.Hour).Unix(),
+        &quot;iat&quot;: time.Now().Unix(),
+    &#125;
+    token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+    tokenStr, err := token.SignedString(signingKey)
+    if err != nil &#123;
+        panic(&quot;簽名失敗: &quot; + err.Error())
+    &#125;
+
+    fmt.Println(&quot;🔐 JWT Token:&quot;, tokenStr)
+
+    // 驗證
+    parsed, err := jwt.Parse(tokenStr, func(t *jwt.Token) (interface&#123;&#125;, error) &#123;
+        if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok &#123;
+            return nil, fmt.Errorf(&quot;unexpected signing method: %v&quot;, t.Header[&quot;alg&quot;])
+        &#125;
+        return signingKey, nil
+    &#125;)
+
+    if err != nil &#123;
+        fmt.Println(&quot;❌ 驗證失敗:&quot;, err)
+    &#125; else if parsed.Valid &#123;
+        fmt.Println(&quot;✅ 驗證成功，用的 key:&quot;, secret.Key)
+    &#125; else &#123;
+        fmt.Println(&quot;❌ Token 無效&quot;)
+    &#125;
+&#125;
+</code></pre>
+<p>並使用 curl發送請求</p>
+<pre><code>curl -X POST http://192.168.1.104:3009/templates \
+-H &quot;Content-Type: application/json&quot; \
+-H &quot;X-Supabase-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTA1NTAzNjgsImlhdCI6MTc1MDU0Njc2OCwic3ViIjoiYzkxYjBiMjctMDE3Yi00MzA4LTg0YzAtMDczYTkzZTE1NTJiIn0.AD5aXE5eMV_eYGC0JwefsI0EeKMIZ7SVVbddMdM_TFM&quot; \
+-H &quot;X-Supabase-Team: 7b878a9d-3dde-48a1-8913-31888d69dd78&quot; \
+-H &quot;Authorization: Bearer sk_e2b_e12df59cc6206a3923a49a477a5db34b9685a98a&quot; \
+-d &#39;&#123;
+    &quot;dockerfile&quot;: &quot;Dockerfile&quot;,
+    &quot;ReadyCmd&quot;:&quot;ReadyCmd&quot;,
+    &quot;StartCmd&quot;:&quot;/bin/true&quot;,
+    &quot;envd_version&quot;:&quot;0.1.1&quot;
+&#125;&#39;
+</code></pre>
+<p>會獲取 一個編號  </p>
+<pre><code>&#123;&quot;aliases&quot;:null,&quot;buildCount&quot;:0,
+&quot;buildID&quot;:&quot;fdd3ae7b-1be9-4795-ac25-bd74cdf37951&quot;,
+&quot;cpuCount&quot;:0,&quot;createdAt&quot;:&quot;0001-01-01T00:00:00Z&quot;,
+&quot;createdBy&quot;:null,&quot;lastSpawnedAt&quot;:&quot;0001-01-01T00:00:00Z&quot;,
+&quot;memoryMB&quot;:0,&quot;public&quot;:false,&quot;spawnCount&quot;:0,
+&quot;templateID&quot;:&quot;7s6n4ysowcq4jexcron3&quot;,
+&quot;updatedAt&quot;:&quot;0001-01-01T00:00:00Z&quot;&#125;
+</code></pre>
+<p>伺服器需要先尋找一個docker資料夾進行</p>
+<pre><code>docker build -t di502spv70vn40ke7ysc:7df37656-7ddc-47f2-8979-21c40b285a4e .
+</code></pre>
+<p>客戶端才可以對伺服器進行第二個步驟</p>
+<pre><code>curl -X POST http://192.168.1.104:3009/templates/di502spv70vn40ke7ysc/builds/7df37656-7ddc-47f2-8979-21c40b285a4e \
+-H &quot;Content-Type: application/json&quot; \
+-H &quot;X-Supabase-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTA1NTAzNjgsImlhdCI6MTc1MDU0Njc2OCwic3ViIjoiYzkxYjBiMjctMDE3Yi00MzA4LTg0YzAtMDczYTkzZTE1NTJiIn0.AD5aXE5eMV_eYGC0JwefsI0EeKMIZ7SVVbddMdM_TFM&quot; \
+-H &quot;X-Supabase-Team: 7b878a9d-3dde-48a1-8913-31888d69dd78&quot; \
+-H &quot;Authorization: Bearer sk_e2b_e12df59cc6206a3923a49a477a5db34b9685a98a&quot; 
+</code></pre>
+<p>然後拉取了docker</p>
+<table>
+<thead>
+<tr>
+<th>步驟</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Docker image size: 34 MB</code></td>
+<td>確認 image 體積</td>
+</tr>
+<tr>
+<td><code>Setting up system files</code></td>
+<td>開始準備 rootfs（root filesystem）</td>
+</tr>
+<tr>
+<td><code>executed provision script env</code></td>
+<td>執行初始化腳本，例如設定環境變數或掛載目錄</td>
+</tr>
+<tr>
+<td><code>set up filesystem</code></td>
+<td>建立 sandbox 或 microVM 的 filesystem</td>
+</tr>
+<tr>
+<td><code>Creating file system and pulling Docker image</code></td>
+<td>將 Docker image 寫入 rootfs（ext4）格式中</td>
+</tr>
+<tr>
+<td><code>closed rootfs file</code> → <code>created rootfs ext4 file</code></td>
+<td>把 rootfs 完整寫入磁碟映像檔，準備啟動</td>
+</tr>
+<tr>
+<td><code>tune2fs</code>, <code>resize2fs</code></td>
+<td>對 ext4 檔案系統進行調整，調整大小</td>
+</tr>
+</tbody></table>
+<p>下一步</p>
+<pre><code>| 步驟 | 命令                                                                                 | 說明                                       |
+| -- | ---------------------------------------------------------------------------------- | ---------------------------------------- |
+| 1  | `mount --make-rprivate /`                                                          | 隔離 mount namespace（避免 host 被影響）          |
+| 2  | `mount -t tmpfs tmpfs ...`                                                         | 建立 tmpfs 掛載目錄，用於 sandbox 環境              |
+| 3  | `ln -s /orchestrator/sandbox/rootfs-...link .../rootfs.ext4`                       | 建立 symlink，把 rootfs 指到對應檔案               |
+| 4  | `ln -s /fc-kernels/vmlinux-6.1.102/vmlinux.bin /fc-vm/vmlinux-6.1.102/vmlinux.bin` | 建立 symlink 指向 kernel binary              |
+| 5  | `ip netns exec ns-316 ... firecracker ...`                                         | 在特定 netns 中啟動 firecracker 並綁定 API socket |
+</code></pre>
+<p>然後發生問題</p>
+<pre><code>&#123;&quot;level&quot;:&quot;info&quot;,&quot;timestamp&quot;:&quot;2025-06-19T14:01:08.141766701Z&quot;,&quot;message&quot;:&quot;2025-06-19T14:01:08.141732515 [anonymous-instance:fc_api] The API server received a Put request on \&quot;/actions\&quot; with body \&quot;
+
+&#123;\\\&quot;action_type\\\&quot;:\\\&quot;InstanceStart\\\&quot;&#125;\\n\&quot;.&quot;,&quot;service&quot;:&quot;template-manager&quot;,&quot;internal&quot;:true,&quot;pid&quot;:179198,&quot;logger&quot;:&quot;template-manager&quot;,&quot;sandbox.id&quot;:&quot;bb5rxi67qkgdxqmprh7xi&quot;,&quot;template.id&quot;:&quot;7s6n4ysowcq4jexcron3&quot;,&quot;team.id&quot;:&quot;&quot;,&quot;instanceID&quot;:&quot;bb5rxi67qkgdxqmprh7xi&quot;,&quot;envID&quot;:&quot;7s6n4ysowcq4jexcron3&quot;&#125;
+
+&#123;&quot;level&quot;:&quot;info&quot;,&quot;timestamp&quot;:&quot;2025-06-19T14:01:08.147679108Z&quot;,&quot;message&quot;:&quot;2025-06-19T14:01:08.147455261 [anonymous-instance:fc_api] Received Error. Status code: 400 Bad Request. Message: Start microvm error: Cannot load kernel due to invalid memory configuration or invalid kernel image: Kernel Loader: failed to load ELF kernel image: Kernel Loader: Unable to read kernel image&quot;,&quot;service&quot;:&quot;template-manager&quot;,&quot;internal&quot;:true,&quot;pid&quot;:179198,&quot;logger&quot;:&quot;template-manager&quot;,&quot;sandbox.id&quot;:&quot;bb5rxi67qkgdxqmprh7xi&quot;,&quot;template.id&quot;:&quot;7s6n4ysowcq4jexcron3&quot;,&quot;team.id&quot;:&quot;&quot;,&quot;instanceID&quot;:&quot;bb5rxi67qkgdxqmprh7xi&quot;,&quot;envID&quot;:&quot;7s6n4ysowcq4jexcron3&quot;&#125;
+</code></pre>
+<p>終於發現問題所在</p>
+<pre><code>                    [ Nomad Server ]
+                        |
+        +---------------+---------------+
+        |                               |
+    [Nomad Client Node A]         [Nomad Client Node B]
+        |                               |
+    [Docker: API]                    [Docker: DB]
+    [Docker: Worker]                [Docker: Proxy]
+</code></pre>
+<p>本質特點如下：</p>
+<pre><code>主控（Control Plane）+ 多台工作節點（Worker Nodes）
+主控節點負責：
+Job 排程
+健康檢查
+負載平衡
+監控、指令發送
+工作節點只跑：容器 + 監控 agent（例如 Nomad Client）
+部署標準化： 開發者只需提供：
+Dockerfile
+Nomad job（或 Helm chart、Compose 等）
+就能被部署到任意主機、任意區域
+資源管理：
+CPU/Memory 配額
+network/port 分配
+logs、metrics、volume 掛載
+高度抽象：
+Job 不管在哪台主機上跑
+所有節點像是一個大主機池
+管理員通過 Nomad / Kubernetes / Swarm 下發 job
+</code></pre>
+<p>本項目把我的docker弄得很亂</p>
+<pre><code>docker stop $(docker ps -aq)
+docker rmi $(docker images -q)
+docker images
+docker rmi -f $(docker images -aq)
+</code></pre>
+<p>測試完畢清理介面卡</p>
+<pre><code>ip -o -4 addr show | grep &#39;10\.12&#39; | awk &#39;&#123;print $2&#125;&#39; | grep &#39;^veth&#39; | sort -u | while read iface; do
+echo &quot;🧹 刪除介面 $iface&quot;
+ip link delete &quot;$iface&quot;
+done
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+      
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="/images/600211.webp" data-sizes="auto" alt="infraDocker化結構" class="lazyload">
+          
+        
+        <a href="/2025/06/20/infraDocker%E5%8C%96%E7%B5%90%E6%A7%8B/"></a>
+        <div class="article-nav-caption">Newer</div>
+        <h3 class="article-nav-title">
+          
+            infraDocker化結構
+          
+        </h3>
+      </div>
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="/images/600211.webp" data-sizes="auto" alt="nomad" class="lazyload">
+        
+      
+      <a href="/2025/06/19/nomad/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          nomad
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+
+
+
+
+</section>
+        </div>
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      
+      
+      
+        2020-2025
+      
+      <span class="footer-info-sep rotate"></span>
+      一袋米要扛幾樓
+    </div>
+    
+      <div>
+        基於&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        20.2k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        02:00
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">總訪問量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">總訪客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目錄</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/600211.webp" data-sizes="auto" alt="一袋米要扛幾樓" class="lazyload">
+  <div class="sidebar-author-name">一袋米要扛幾樓</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">53</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分類</div>
+    <div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>標籤</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首頁"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">首頁</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="歸檔"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">歸檔</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="關於"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">關於</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友鏈"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">友鏈</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+    
+  </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  
+</nav>
+
+    </div>
+    
+    
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js" integrity="sha384-8LyaidD9GPxQQgLJO&#x2F;WRw&#x2F;O2h3BoNq&#x2F;ApI&#x2F;ecpvM6RsrCz2qP2ppBXUKihP4V&#x2F;2d" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "一袋米要扛幾樓",
+          title: "針對infra項目分析",
+          url: "https://itamiokanjiro.ddns.net:3111/2025/06/19/%E9%87%9D%E5%B0%8Dinfra%E9%A0%85%E7%9B%AE%E5%88%86%E6%9E%90/",
+          excerpt: "",
+          description: "",
+          stripContent: "本嘗試  是高度失敗的 最終失敗作品 infra&amp;#x2F;├── .github&amp;#x2F;│   └── workflows&amp;#x2F;├── .vscode&amp;#x2F;├── packages&amp;#x2F;│   ├── api (可以獨立編譯並啟動在docker中 )&amp;#x2F;│   ├── buckets&amp;#x2F;│   ├── client-proxy&amp;#x2F;│   ├── cluster&amp;#x2F;│   ├── cluster-disk-image&amp;#x2F;│   ├──",
+          date: "Thu Jun 19 2025 21:20:45 GMT+0800",
+          updated: "Sun Jun 22 2025 07:01:34 GMT+0800",
+          cover: "/images/600211.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+        
+
+
+
+
+
+
+
+
+      
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.8.4' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+  </html>
+
